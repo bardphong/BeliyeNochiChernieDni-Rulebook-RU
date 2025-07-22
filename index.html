@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WNDD | Справочник на русском</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+    <div class="header_container" >
+        <a href="#" id="mainPageNav" class="main_page_nav">Главная</a>
+        <h1>Книжка по TTRPG Проджект Муна </h1>
+        <button onclick="toggleDarkMode()" class="theme_switch" >
+            <svg class="theme_icon" width="20px" height="20px">
+                <use href="/assets/darkmode.svg#moon"></use>
+            </svg>
+        </button>
+    </div>
+    </header>
+    <main>
+    <div class="nav_container">
+        <ul id="chapterNav">
+            <li data-chapter="1">Глава 1: Основы</li>
+            <li data-chapter="2">Глава 2: Создание персонажа</li>
+            <li data-chapter="3">Глава 3: Расы</li>
+            <li data-chapter="4">Глава 4: Предыстория</li>
+            <li data-chapter="5">Глава 5: Прогресс персонажа</li>
+            <li data-chapter="6">Глава 6: Бой и взаимодействие</li>
+            <li data-chapter="7">Глава 7: Взаимодействия вне боя</li>
+            <li data-chapter="8">Глава 8: Организации, законы и структура</li>
+            <li data-chapter="9">Глава 9: Предметы</li>
+            <li data-chapter="10">Глава 10: Искажения, ЭГО и особые способности</li>
+            <li data-chapter="11">Глава 11: Эффекты состояния</li>
+        </ul>
+    </div>
+    <div class="container" id="mainText">
+        <!-- The initial content will be set by JS using defaultContent -->
+    </div>
+</main>
+<script>
+function setDarkMode(enabled) {
+    if (enabled) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "true");
+    } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "false");
+    }
+}
+
+function toggleDarkMode() {
+    setDarkMode(!document.body.classList.contains("dark-mode"));
+}
+
+// On page load, set mode from localStorage
+window.addEventListener("DOMContentLoaded", function() {
+    const dark = localStorage.getItem("darkMode") === "true";
+    setDarkMode(dark);
+    document.getElementById('mainText').innerHTML = defaultContent;
+});
+
+// Chapter content for demonstration
+const chapters = {
+    1: `Глава 1: Основы<br>
+Основные кубы — это 2d10 или d100, используемые как процентный показатель успеха. К этому броску добавляются модификаторы:<br>
+<br>
+Навыки (Skills): ×6 их значение<br>
+<br>
+Характеристики (Stats): ×4 их значение<br>
+<br>
+Результат используется для определения успеха.<br><br>
+<b>Таблица результатов броска</b>
+<table style="width:100%;border-collapse:collapse;margin-top:16px;">
+  <thead>
+    <tr>
+      <th style="border:1px solid #ccc;padding:8px;background:#ffe5b8;color:#292828;">Итоговый результат (с учётом модификаторов)</th>
+      <th style="border:1px solid #ccc;padding:8px;background:#ffe5b8;color:#292828;">Результат действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">Ровно 50, орёл при подбрасывании монеты</td>
+      <td style="border:1px solid #ccc;padding:8px;">Пограничный успех — вы добились цели, но создали дополнительные проблемы.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">Ровно 50, решка при подбрасывании монеты</td>
+      <td style="border:1px solid #ccc;padding:8px;">Пограничный провал — вы потерпели неудачу, но получили полезную информацию или облегчили задачу для следующей попытки (сложность понижается на 5).</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">51–75</td>
+      <td style="border:1px solid #ccc;padding:8px;">Успех — вы сделали то, что хотели.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">25–49</td>
+      <td style="border:1px solid #ccc;padding:8px;">Провал — не получилось выполнить действие.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">76–100</td>
+      <td style="border:1px solid #ccc;padding:8px;">Отличный успех — выполнено более эффективно или с дополнительной выгодой.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">11–24</td>
+      <td style="border:1px solid #ccc;padding:8px;">Критический провал — провал с тяжёлыми последствиями.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">&gt;100</td>
+      <td style="border:1px solid #ccc;padding:8px;">Абсолютный успех — действие выполнено мгновенно и с наилучшим результатом.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ccc;padding:8px;">≤10</td>
+      <td style="border:1px solid #ccc;padding:8px;">Абсолютный провал — катастрофическая неудача, возможно с необратимыми последствиями.</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<b>Пример:</b> Если вы пытаетесь взломать компьютер, имея навык Технологии 3 и стат Мудрость равен 4, сначала бросаете 2d10, затем добавляете 18 от навыка (3 × 6) и 16 от характеристики (4 × 4), всего +34. Если вы выбросили 20, итог будет 54, и результат изменится с «Критического провала» на «Успех».<br>
+Если вы соответствуете требованию успеха, бросьте d2 (подбросьте монету), чтобы определить, получите ли вы пограничный успех или пограничный провал.<br><br>
+В бою все броски, связанные с навыками или характеристиками, добавляют модификатор напрямую, например, стандартная атака в ближнем бою добавляет ваш модификатор навыка «Ближний бой».<br><br>
+Соперничающие броски работают по системе порога сложности или целевого числа, где «атакующий» должен перебросить цель, установленную «защитником». Например, персонаж делает проверку против другого, как при попытке снизить цену через Переговоры или скрыться с помощью Скрытности от кого-то, кто активно ищет. Такие проверки проводятся так: «защищающийся» сначала бросает кубы с соответствующим навыком, например, зрение против скрытности, переговоры против переговоров, или ЭГО против Подавления. Затем этот бросок используется как порог сложности для проверки «атакующего» навыка/характеристики. Всё зависит от контекста, поэтому можно менять используемые навыки, если это логично, или просто использовать одинаковый навык для обеих сторон. Если нет явного атакующего или защитника, ГМ может просто выбрать тот, кто выбросил больше, и дать обычный успех или провал.<br>
+`,
+    2: "Chapter 2: Character Creation<br>Learn how to create your character, choose stats, and more.",
+    3: "Chapter 3: Races<br>Explore the different races available in the game.",
+    4: "Chapter 4: Background<br>Discover backgrounds and their effects.",
+    5: "Chapter 5: Character Progression<br>How your character grows and evolves.",
+    6: "Chapter 6: Combat and Interaction<br>Rules and tips for combat and social interaction.",
+    7: "Chapter 7: Non-Combat Interactions<br>Roleplay, exploration, and more.",
+    8: "Chapter 8: Organizations, Laws, and Structure<br>Setting details and world-building.",
+    9: "Chapter 9: Items<br>Weapons, armor, and magical items.",
+    10: "Chapter 10: Distortions, EGO, and Custom Abilities<br>Advanced mechanics and customization.",
+    11: "Chapter 11: Status Effects<br>Conditions and their impact on gameplay."
+};
+
+const defaultContent = `
+White Nights, Dark Days (WNDD) — это система, которая представляет собой смесь многих других настольных ролевых игр (TTRPG). Знание этих систем не требуется, но тем, кто знаком с ними, будет легче понять механику.<br> 
+Эта система в основном рассчитана на конкретный сеттинг (Lobotomy Corporation и Library of Ruina от Project Moon), но её можно адаптировать и под другие миры. Например, сингулярности можно заменить магическими артефактами, а искажения (Distortions) — на некие "древние ужасы" или оккультные феномены. Однако авторам не рекомендуется использовать её для других сеттингов, если вы не знакомы с WNDD.
+<br><br>
+<div style="width:100%;display:flex;justify-content:center;align-items:center;">
+  <img src="/assets/citymap.webp" alt="City Map" style="max-width:800px;width:100%;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.18);margin-top:32px;">
+</div>
+`;
+
+document.getElementById('chapterNav').addEventListener('click', function(e) {
+    if (e.target.tagName === 'LI') {
+        const chapter = e.target.getAttribute('data-chapter');
+        document.getElementById('mainText').innerHTML = chapters[chapter];
+        // Highlight selected chapter
+        Array.from(this.children).forEach(li => li.classList.remove('active'));
+        e.target.classList.add('active');
+    }
+});
+
+document.getElementById('mainPageNav').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('mainText').innerHTML = defaultContent;
+    Array.from(document.getElementById('chapterNav').children).forEach(li => li.classList.remove('active'));
+});
+</script>
+</body>
+</html>
